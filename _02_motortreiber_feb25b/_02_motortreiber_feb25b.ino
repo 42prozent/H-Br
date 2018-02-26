@@ -8,8 +8,8 @@
 //rightL
 //richtR
 
-      int mainBusA; // speed Value Left
-    //  int ; // direcktion Value left
+      int mainBusA; // speed & diretion Value Left
+      int subBusA; // vorzeichenwchsel, debuing pwm
     
 void setup() {
 
@@ -28,8 +28,10 @@ void loop() {
 delay (20);
 
 
-  mainBusA = 0;
- // DVL = 1;
+  mainBusA = 80;
+  subBusA = abs (mainBusA); //*-1
+  
+  
 
 if (mainBusA > 0) {
   engineOne (12,13); // left vorward
@@ -48,11 +50,12 @@ if (mainBusA < 0) {
 
 int engineOne (int leftForward , int leftBackward){   // engine_One_Left_Forward
   
-analogWrite  (leftSpeed, mainBusA);
+analogWrite  (leftSpeed, subBusA);
 // spacer vor pid
 digitalWrite (leftForward,  HIGH);
 digitalWrite (leftBackward, LOW);
-Serial.println (mainBusA, DEC);
+Serial.print (mainBusA, DEC);
+Serial.println (subBusA, DEC);
 return;
 }
 
