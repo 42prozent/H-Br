@@ -1,15 +1,21 @@
+#include <PID_v1.h>
 
-#define leftSpeed  11   // value -255 to 255 (is the H-bridge Enable pin) 
-//#define leftSpeed2   // value -255 to 255 
-#define rightSpeed 10 // 
+#define enable_left_speed  11   // value -255 to 255 (is the H-bridge Enable pin) 
+  //#define enable_left_speed2 
+#define enable_right_speed 10
 
-//#define leftForward   12  //input 1 H-Bridge  // is now pos & neg
-//#define leftBackward  13 //input 2 H-Bridge
+#define power1  12  //input 1 H-Bridge // Trobelschooting Parameter: Cange the motordirecktion here
+#define power2  13 //input 2 H-Bridge
 //rightL
 //richtR
 
       int mainBusA; // speed & diretion Value Left
       int subBusA; // vorzeichenwchsel, debuing pwm
+
+// PID:
+//double Setpoint, Input, Output; // variablen 
+
+      
     
 void setup() {
 
@@ -30,16 +36,16 @@ delay (20);
 
   mainBusA = analogRead (0);
   Serial.println (mainBusA);
-  mainBusA = map (mainBusA, 0, 1200, 0, 520);
+  mainBusA = map (mainBusA, 0, 100, 0, 50);
   subBusA = abs (mainBusA); // eventuelles negatieves vorzeichen entfernt
   
   
 
-if (mainBusA > 265) {
-  engineOne (12,13); // left vorward
+if (mainBusA > 60) {
+  engineOne (power1,power2); // left vorward
 }
-if (mainBusA < 255) {
-  engineOne (13,12); // left backward
+if (mainBusA < 40) {
+  engineOne (power2,power1); // left backward
 }
 
 
@@ -52,12 +58,12 @@ if (mainBusA < 255) {
 
 int engineOne (int wire1 , int wire2 ){   // engine_One_Left_Forward
   
-analogWrite  (leftSpeed, subBusA);
+analogWrite  (enable_left_speed, subBusA);
 // spacer vor pid
 digitalWrite (wire1,  HIGH);
 digitalWrite (wire2,  LOW );
 
-//Serial.print   (mainBusA, DEC);
+Serial.print   (mainBusA, DEC);
 Serial.println (subBusA, DEC);
 return;
 }
@@ -66,7 +72,7 @@ return;
 
 int engineOne_LB (){   // engine_One_Left_Backward
   
-analogWrite  (leftSpeed, SVL);
+analogWrite  (enable_left_speed, SVL);
 digitalWrite (leftForward,  LOW);
 digitalWrite (leftBackward, HIGH);
 Serial.println (SVL, DEC);
