@@ -1,14 +1,15 @@
 
 #define leftSpeed  11   // value -255 to 255 (is the H-bridge Enable pin) 
-//#define rightSpeed   // value -255 to 255 
+//#define leftSpeed2   // value -255 to 255 
+#define rightSpeed 10 // 
 
-#define leftForward   12  //input 1 H-Bridge
-#define leftBackward  13 //input 2 H-Bridge
+//#define leftForward   12  //input 1 H-Bridge
+//#define leftBackward  13 //input 2 H-Bridge
 //rightL
 //richtR
 
-    int SVL; // speed Value Left
-    int DVL; // direcktion Value left
+      int mainBusA; // speed Value Left
+    //  int ; // direcktion Value left
     
 void setup() {
 
@@ -18,53 +19,55 @@ void setup() {
     
     Serial.begin(9600);
 
+      
+
+
 }
 
 void loop() {
 delay (20);
 
-int   inputSpeed = 0;
-  
 
+  mainBusA = 0;
+ // DVL = 1;
 
- if (Serial.available() > 0)
-  {
-    inputSpeed = Serial.read();
-    
-    int inputSpeed[2];
-  
-    
-    
-    if (inputSpeed > 0){
-        engineOne_LF ();
-        delay (900);
-    }
-    
-    else {
-    
-      return;
-    }
-    }
+if (mainBusA > 0) {
+  engineOne (12,13); // left vorward
+}
+if (mainBusA < 0) {
+  engineOne (13,12); // left backward
+}
 
 
 
 
-digitalWrite (leftForward,  LOW); digitalWrite (leftBackward, LOW);
+//digitalWrite (leftForward,  LOW); digitalWrite (leftBackward, LOW);
 
 }
 
 
-int engineOne_LF (){   // engine_One_Left_Forward
+int engineOne (int leftForward , int leftBackward){   // engine_One_Left_Forward
   
-analogWrite  (leftSpeed, SVL);
+analogWrite  (leftSpeed, mainBusA);
+// spacer vor pid
 digitalWrite (leftForward,  HIGH);
 digitalWrite (leftBackward, LOW);
+Serial.println (mainBusA, DEC);
+return;
+}
+
+/*
+
+int engineOne_LB (){   // engine_One_Left_Backward
+  
+analogWrite  (leftSpeed, SVL);
+digitalWrite (leftForward,  LOW);
+digitalWrite (leftBackward, HIGH);
 Serial.println (SVL, DEC);
 return;
 }
 
-
-
+*/
 
 
 int serialRead (){
