@@ -48,12 +48,12 @@ if (mainBusA < 0) {
 }
 
 
-int engineOne (int pos1 , int neg1 ){   // engine_One_Left_Forward
+int engineOne (int wire1 , int wire2 ){   // engine_One_Left_Forward
   
 analogWrite  (leftSpeed, subBusA);
 // spacer vor pid
-digitalWrite (pos1,  HIGH);
-digitalWrite (neg1,  LOW );
+digitalWrite (wire1,  HIGH);
+digitalWrite (wire2,  LOW );
 
 Serial.print (mainBusA, DEC);
 Serial.println (subBusA, DEC);
