@@ -12,11 +12,12 @@
       int mainBusA; // speed & diretion Value Left
       int subBusA; // vorzeichenwchsel, debuing pwm
 
-// PID:
-//double Setpoint, Input, Output; // variablen 
+/*/ PID:
+double Setpoint, Input, Output;   // Define coneckting Variables
+double Kp=2, Ki=5, Kd=1;          //Specify the links and initial tuning parameters
+PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+  */    
 
-      
-    
 void setup() {
 
   pinMode (11, OUTPUT); // Motor Speed about the enable pin
@@ -34,17 +35,17 @@ void loop() {
 delay (20);
 
 
-  mainBusA = analogRead (0);
+  mainBusA = -95;
   Serial.println (mainBusA);
   mainBusA = map (mainBusA, 0, 100, 0, 50);
   subBusA = abs (mainBusA); // eventuelles negatieves vorzeichen entfernt
   
   
 
-if (mainBusA > 60) {
+if (mainBusA > 0) {
   engineOne (power1,power2); // left vorward
 }
-if (mainBusA < 40) {
+if (mainBusA < 0) {
   engineOne (power2,power1); // left backward
 }
 
