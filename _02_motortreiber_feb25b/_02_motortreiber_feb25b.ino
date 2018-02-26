@@ -23,30 +23,29 @@ void setup() {
 void loop() {
 delay (20);
 
-while (Serial.available() > 0){
-
-  SVL = Serial.parseInt() ;
-  DVL = Serial.parseInt() ;
-
-  if (Serial.read() == '\n'){
-    
-    Serial.println (SLV, HEX);
-  }
-
-}
-
- 
+int   inputSpeed = 0;
   
-   // inputSpeedL = Serial.read();
-   
+
+
+ if (Serial.available() > 0)
+  {
+    inputSpeed = Serial.read();
+    
+    int inputSpeed[2];
+  
     
     
-  //  if (inputSpeedL > 0){
-     //   engineOne_LF ();
+    if (inputSpeed > 0){
+        engineOne_LF ();
         delay (900);
-   // }
+    }
     
- 
+    else {
+    
+      return;
+    }
+    }
+
 
 
 
