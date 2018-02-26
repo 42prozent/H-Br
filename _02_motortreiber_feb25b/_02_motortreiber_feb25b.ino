@@ -19,7 +19,7 @@ void setup() {
     
     Serial.begin(9600);
 
-      
+  
 
 
 }
@@ -28,15 +28,17 @@ void loop() {
 delay (20);
 
 
-  mainBusA = 80;
-  subBusA = abs (mainBusA); //*-1
+  mainBusA = analogRead (0);
+  Serial.println (mainBusA);
+  mainBusA = map (mainBusA, 0, 1200, 0, 520);
+  subBusA = abs (mainBusA); // eventuelles negatieves vorzeichen entfernt
   
   
 
-if (mainBusA > 0) {
+if (mainBusA > 265) {
   engineOne (12,13); // left vorward
 }
-if (mainBusA < 0) {
+if (mainBusA < 255) {
   engineOne (13,12); // left backward
 }
 
@@ -55,7 +57,7 @@ analogWrite  (leftSpeed, subBusA);
 digitalWrite (wire1,  HIGH);
 digitalWrite (wire2,  LOW );
 
-Serial.print (mainBusA, DEC);
+//Serial.print   (mainBusA, DEC);
 Serial.println (subBusA, DEC);
 return;
 }
