@@ -3,7 +3,7 @@
 //#define leftSpeed2   // value -255 to 255 
 #define rightSpeed 10 // 
 
-//#define leftForward   12  //input 1 H-Bridge
+//#define leftForward   12  //input 1 H-Bridge  // is now pos & neg
 //#define leftBackward  13 //input 2 H-Bridge
 //rightL
 //richtR
@@ -48,12 +48,13 @@ if (mainBusA < 0) {
 }
 
 
-int engineOne (int leftForward , int leftBackward){   // engine_One_Left_Forward
+int engineOne (int pos1 , int neg1 ){   // engine_One_Left_Forward
   
 analogWrite  (leftSpeed, subBusA);
 // spacer vor pid
-digitalWrite (leftForward,  HIGH);
-digitalWrite (leftBackward, LOW);
+digitalWrite (pos1,  HIGH);
+digitalWrite (neg1,  LOW );
+
 Serial.print (mainBusA, DEC);
 Serial.println (subBusA, DEC);
 return;
